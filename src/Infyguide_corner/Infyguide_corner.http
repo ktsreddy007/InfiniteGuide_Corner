@@ -1,0 +1,6 @@
+@Infyguide_corner_HostAddress = http://localhost:5053
+
+GET {{Infyguide_corner_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
