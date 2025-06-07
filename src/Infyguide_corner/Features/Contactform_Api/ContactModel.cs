@@ -1,4 +1,4 @@
-namespace ContactFormApi.Features.ContactForm_Api
+namespace Infyguide_corner.Features.Contactform_Api
 {
     public class ContactForm
     {

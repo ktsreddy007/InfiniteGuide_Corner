@@ -1,8 +1,8 @@
-using ContactFormApi.Features.ContactForm_Api;
+using Infyguide_corner.Features.Contactform_Api;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 
-namespace ContactFormApi.Controllers
+namespace Infyguide_corner.Features.Contactform_Api
 {
     [ApiController]
     [Route("api/[controller]")]
