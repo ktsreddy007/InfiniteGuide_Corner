@@ -33,3 +33,4 @@ E:\InfiniteGuide_Corner\src\Infyguide_corner\obj\Debug\net8.0\refint\Infyguide_c
 E:\InfiniteGuide_Corner\src\Infyguide_corner\obj\Debug\net8.0\Infyguide_corner.pdb
 E:\InfiniteGuide_Corner\src\Infyguide_corner\obj\Debug\net8.0\Infyguide_corner.genruntimeconfig.cache
 E:\InfiniteGuide_Corner\src\Infyguide_corner\obj\Debug\net8.0\ref\Infyguide_corner.dll
+E:\InfiniteGuide_Corner\src\Infyguide_corner\bin\Debug\net8.0\contacts.json

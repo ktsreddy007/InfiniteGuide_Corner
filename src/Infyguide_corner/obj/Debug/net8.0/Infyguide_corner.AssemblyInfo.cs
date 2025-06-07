@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Infyguide_corner")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+aa776e9b32812d52e206df8839a825a1157cd29c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2ac8b65860720c79e63cc6f96e5870c35caaff58")]
 [assembly: System.Reflection.AssemblyProductAttribute("Infyguide_corner")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Infyguide_corner")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
