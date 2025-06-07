@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Infyguide_corner.props" />
+</Project>

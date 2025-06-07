@@ -1,0 +1,437 @@
+{
+  "Files": [
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\css\\body_style.css",
+      "PackagePath": "staticwebassets\\css\\body_style.css"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\css\\contacts\\contacts.css",
+      "PackagePath": "staticwebassets\\css\\contacts\\contacts.css"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\css\\fix_btn_registr.css",
+      "PackagePath": "staticwebassets\\css\\fix_btn_registr.css"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\css\\footer_style.css",
+      "PackagePath": "staticwebassets\\css\\footer_style.css"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\css\\gift_certificates\\gift_certifitates.css",
+      "PackagePath": "staticwebassets\\css\\gift_certificates\\gift_certifitates.css"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\css\\header_style.css",
+      "PackagePath": "staticwebassets\\css\\header_style.css"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\css\\index\\add_block_style.css",
+      "PackagePath": "staticwebassets\\css\\index\\add_block_style.css"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\css\\index\\gallery_style.css",
+      "PackagePath": "staticwebassets\\css\\index\\gallery_style.css"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\css\\index\\hero_style.css",
+      "PackagePath": "staticwebassets\\css\\index\\hero_style.css"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\css\\pre_footer_style.css",
+      "PackagePath": "staticwebassets\\css\\pre_footer_style.css"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\css\\price_and_discount\\price_and_discount.css",
+      "PackagePath": "staticwebassets\\css\\price_and_discount\\price_and_discount.css"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\css\\rules\\hero.css",
+      "PackagePath": "staticwebassets\\css\\rules\\hero.css"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\css\\rules\\rules_style.css",
+      "PackagePath": "staticwebassets\\css\\rules\\rules_style.css"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\css\\services\\services.css",
+      "PackagePath": "staticwebassets\\css\\services\\services.css"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\css\\trainings\\trainings.css",
+      "PackagePath": "staticwebassets\\css\\trainings\\trainings.css"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\html\\anticellulite.html",
+      "PackagePath": "staticwebassets\\html\\anticellulite.html"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\html\\contacts.html",
+      "PackagePath": "staticwebassets\\html\\contacts.html"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\html\\face.html",
+      "PackagePath": "staticwebassets\\html\\face.html"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\html\\fire.html",
+      "PackagePath": "staticwebassets\\html\\fire.html"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\html\\for_two.html",
+      "PackagePath": "staticwebassets\\html\\for_two.html"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\html\\gavai.html",
+      "PackagePath": "staticwebassets\\html\\gavai.html"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\html\\gift_certificates.html",
+      "PackagePath": "staticwebassets\\html\\gift_certificates.html"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\html\\index.html",
+      "PackagePath": "staticwebassets\\html\\index.html"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\html\\price_and_discounts.html",
+      "PackagePath": "staticwebassets\\html\\price_and_discounts.html"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\html\\rules.html",
+      "PackagePath": "staticwebassets\\html\\rules.html"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\html\\spa.html",
+      "PackagePath": "staticwebassets\\html\\spa.html"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\html\\stone.html",
+      "PackagePath": "staticwebassets\\html\\stone.html"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\html\\tai.html",
+      "PackagePath": "staticwebassets\\html\\tai.html"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\html\\trainings.html",
+      "PackagePath": "staticwebassets\\html\\trainings.html"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\contacts\\hero-background.png",
+      "PackagePath": "staticwebassets\\img\\contacts\\hero-background.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\favicon.jpg",
+      "PackagePath": "staticwebassets\\img\\favicon.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\footer\\envelope.png",
+      "PackagePath": "staticwebassets\\img\\footer\\envelope.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\footer\\facebook.png",
+      "PackagePath": "staticwebassets\\img\\footer\\facebook.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\footer\\instagram.png",
+      "PackagePath": "staticwebassets\\img\\footer\\instagram.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\footer\\location_sign.png",
+      "PackagePath": "staticwebassets\\img\\footer\\location_sign.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\footer\\phone.png",
+      "PackagePath": "staticwebassets\\img\\footer\\phone.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\footer\\youtube.png",
+      "PackagePath": "staticwebassets\\img\\footer\\youtube.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\gift_certificates\\cert-1.jpg",
+      "PackagePath": "staticwebassets\\img\\gift_certificates\\cert-1.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\gift_certificates\\cert-2.jpg",
+      "PackagePath": "staticwebassets\\img\\gift_certificates\\cert-2.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\gift_certificates\\hero-bg.png",
+      "PackagePath": "staticwebassets\\img\\gift_certificates\\hero-bg.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\alert_index_pre_footer.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\alert_index_pre_footer.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\background....png",
+      "PackagePath": "staticwebassets\\img\\index\\background....png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\background.png",
+      "PackagePath": "staticwebassets\\img\\index\\background.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\gallery\\gallery.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\gallery\\gallery.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\gallery\\gallery_1.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\gallery\\gallery_1.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\gallery\\gallery_2.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\gallery\\gallery_2.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\gallery\\gallery_3.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\gallery\\gallery_3.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\gallery\\gallery_4.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\gallery\\gallery_4.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\gallery\\gallery_5.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\gallery\\gallery_5.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\gallery\\gallery_6.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\gallery\\gallery_6.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\gallery\\gallery_7.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\gallery\\gallery_7.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\gallery\\gallery_8.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\gallery\\gallery_8.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\gallery\\gallery_9.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\gallery\\gallery_9.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\gallery\\gallery_ii.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\gallery\\gallery_ii.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\gallery\\gallery_iii.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\gallery\\gallery_iii.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\gallery\\gallery_iv.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\gallery\\gallery_iv.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\gallery\\gallery_v.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\gallery\\gallery_v.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\gallery\\gallery_vi.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\gallery\\gallery_vi.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\index\\gallery\\gallery_vii.jpg",
+      "PackagePath": "staticwebassets\\img\\index\\gallery\\gallery_vii.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\logo_massage.png",
+      "PackagePath": "staticwebassets\\img\\logo_massage.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\price_and_discounts\\abonoment-discount.jpg",
+      "PackagePath": "staticwebassets\\img\\price_and_discounts\\abonoment-discount.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\price_and_discounts\\hero-background.png",
+      "PackagePath": "staticwebassets\\img\\price_and_discounts\\hero-background.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\price_and_discounts\\star.png",
+      "PackagePath": "staticwebassets\\img\\price_and_discounts\\star.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\rules\\hero.png",
+      "PackagePath": "staticwebassets\\img\\rules\\hero.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\rules\\yin-yang-symbol.png",
+      "PackagePath": "staticwebassets\\img\\rules\\yin-yang-symbol.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\anticellulite\\hero-bg.png",
+      "PackagePath": "staticwebassets\\img\\services\\anticellulite\\hero-bg.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\anticellulite\\img-1.jpg",
+      "PackagePath": "staticwebassets\\img\\services\\anticellulite\\img-1.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\anticellulite\\img-2.jpg",
+      "PackagePath": "staticwebassets\\img\\services\\anticellulite\\img-2.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\face\\hero-bg.png",
+      "PackagePath": "staticwebassets\\img\\services\\face\\hero-bg.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\face\\img-1.jpg",
+      "PackagePath": "staticwebassets\\img\\services\\face\\img-1.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\fire\\hero-bg.png",
+      "PackagePath": "staticwebassets\\img\\services\\fire\\hero-bg.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\for_two\\hero-bg.png",
+      "PackagePath": "staticwebassets\\img\\services\\for_two\\hero-bg.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\for_two\\img-1.jpg",
+      "PackagePath": "staticwebassets\\img\\services\\for_two\\img-1.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\for_two\\img-2.jpg",
+      "PackagePath": "staticwebassets\\img\\services\\for_two\\img-2.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\for_two\\img-3.jpg",
+      "PackagePath": "staticwebassets\\img\\services\\for_two\\img-3.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\gavai\\coupon.svg",
+      "PackagePath": "staticwebassets\\img\\services\\gavai\\coupon.svg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\gavai\\hero-bg.png",
+      "PackagePath": "staticwebassets\\img\\services\\gavai\\hero-bg.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\gavai\\img-1.jpg",
+      "PackagePath": "staticwebassets\\img\\services\\gavai\\img-1.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\spa\\ad-1.jpg",
+      "PackagePath": "staticwebassets\\img\\services\\spa\\ad-1.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\spa\\ad-2.jpg",
+      "PackagePath": "staticwebassets\\img\\services\\spa\\ad-2.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\spa\\ad-3.jpg",
+      "PackagePath": "staticwebassets\\img\\services\\spa\\ad-3.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\spa\\ad-4.jpg",
+      "PackagePath": "staticwebassets\\img\\services\\spa\\ad-4.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\spa\\hero-bg.png",
+      "PackagePath": "staticwebassets\\img\\services\\spa\\hero-bg.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\stone\\hero-bg.png",
+      "PackagePath": "staticwebassets\\img\\services\\stone\\hero-bg.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\stone\\img-1.jpg",
+      "PackagePath": "staticwebassets\\img\\services\\stone\\img-1.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\tai\\hero-bg.png",
+      "PackagePath": "staticwebassets\\img\\services\\tai\\hero-bg.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\tai\\img-1.jpg",
+      "PackagePath": "staticwebassets\\img\\services\\tai\\img-1.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\tai\\img-3.jpg",
+      "PackagePath": "staticwebassets\\img\\services\\tai\\img-3.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\tai\\img-4.jpg",
+      "PackagePath": "staticwebassets\\img\\services\\tai\\img-4.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\services\\tai\\img-5.jpg",
+      "PackagePath": "staticwebassets\\img\\services\\tai\\img-5.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\trainings\\hero-bd.png",
+      "PackagePath": "staticwebassets\\img\\trainings\\hero-bd.png"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\trainings\\tai-1.jpg",
+      "PackagePath": "staticwebassets\\img\\trainings\\tai-1.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\trainings\\tai-2.jpg",
+      "PackagePath": "staticwebassets\\img\\trainings\\tai-2.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\trainings\\teaching-1.jpg",
+      "PackagePath": "staticwebassets\\img\\trainings\\teaching-1.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\img\\trainings\\teaching-2.jpg",
+      "PackagePath": "staticwebassets\\img\\trainings\\teaching-2.jpg"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\js\\fix_btn.js",
+      "PackagePath": "staticwebassets\\js\\fix_btn.js"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\js\\footer.js",
+      "PackagePath": "staticwebassets\\js\\footer.js"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\js\\header.js",
+      "PackagePath": "staticwebassets\\js\\header.js"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\js\\langs\\footer_lang.js",
+      "PackagePath": "staticwebassets\\js\\langs\\footer_lang.js"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\js\\langs\\header_lang.js",
+      "PackagePath": "staticwebassets\\js\\langs\\header_lang.js"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\js\\langs\\index_lang.js",
+      "PackagePath": "staticwebassets\\js\\langs\\index_lang.js"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\js\\langs\\rules_lang.js",
+      "PackagePath": "staticwebassets\\js\\langs\\rules_lang.js"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\js\\logic\\logic_index_change_lang.js",
+      "PackagePath": "staticwebassets\\js\\logic\\logic_index_change_lang.js"
+    },
+    {
+      "Id": "E:\\InfiniteGuide_Corner\\src\\Infyguide_corner\\wwwroot\\js\\logic\\logic_index_change_logo.js",
+      "PackagePath": "staticwebassets\\js\\logic\\logic_index_change_logo.js"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.Infyguide_corner.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.build.Infyguide_corner.props",
+      "PackagePath": "build\\Infyguide_corner.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildMultiTargeting.Infyguide_corner.props",
+      "PackagePath": "buildMultiTargeting\\Infyguide_corner.props"
+    },
+    {
+      "Id": "obj\\Debug\\net8.0\\staticwebassets\\msbuild.buildTransitive.Infyguide_corner.props",
+      "PackagePath": "buildTransitive\\Infyguide_corner.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
