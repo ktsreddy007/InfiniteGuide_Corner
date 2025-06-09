@@ -6,10 +6,39 @@
 trigger:
 - main
 
-pool:
-  name: Self-hosted
+stages:
+- stage: Restore
+  displayName: 'Restore Dependencies'
+  jobs:
+  - job: RestoreJob
+    pool:
+      name: Self-Hosted
+      demands:
+        - Agent.Name -equals localhost
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '8.0.x'  # Change based on your .NET version
 
-steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
+    - script: dotnet restore YourProject.sln
+      displayName: 'Dotnet Restore'
 
+# Stage 2: Build and Compile
+- stage: Build
+  displayName: 'Build and Compile'
+  dependsOn: Restore
+  jobs:
+  - job: BuildJob
+    pool:
+      name: Self-Hosted
+      demands:
+        - Agent.Name -equals localhost
+    steps:
+    - task: UseDotNet@2
+      inputs:
+        packageType: 'sdk'
+        version: '8.0.x'
+
+    - script: dotnet build InfiniteGuide_Corner.sln --configuration Release
+      displayName: 'Dotnet Build'
