@@ -78,7 +78,7 @@ stages:
       name: Self-Hosted
       demands:
         - Agent.Name -equals localhost
-  variables:
+    variables:
       ARTIFACTORY_URL: 'http://192.168.56.1:8082'
       steps:
         script: |
