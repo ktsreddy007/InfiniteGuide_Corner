@@ -8,8 +8,8 @@ trigger:
 
 stages:
 # Stage 1: Check and Install Dependencies (if needed)
-- stage: .Net Setup
-  displayName: 'Check and Install Dependencies for .Net on CentOS'
+- stage: DotNetSetup
+  displayName: 'Check and Install Dependencies for .NET on CentOS'
   jobs:
   - job: DependencyCheck
     pool:
@@ -34,7 +34,7 @@ stages:
 # Stage 2: Restore Dependencies
 - stage: Restore
   displayName: 'Restore Dependencies'
-  dependsOn: Setup
+  dependsOn: DotNetSetup
   jobs:
   - job: RestoreJob
     pool:
@@ -42,7 +42,7 @@ stages:
       demands:
         - Agent.Name -equals localhost
     steps:
-    - script: dotnet restore YourProject.sln
+    - script: dotnet restore InfiniteGuide_Corner.sln
       displayName: 'Dotnet Restore'
 
 # Stage 3: Build and Compile
