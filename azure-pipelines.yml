@@ -7,8 +7,34 @@ trigger:
 - main
 
 stages:
+# Stage 1: Check and Install Dependencies (if needed)
+- stage: .Net Setup
+  displayName: 'Check and Install Dependencies for .Net on CentOS'
+  jobs:
+  - job: DependencyCheck
+    pool:
+      name: Self-Hosted
+      demands:
+        - Agent.Name -equals localhost
+    steps:
+    - script: |
+        echo "Checking for .NET SDK..."
+        if ! command -v dotnet &> /dev/null; then
+          echo ".NET SDK not found. Installing..."
+          sudo rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
+          sudo yum install -y dotnet-sdk-8.0
+        else
+          echo ".NET SDK already installed."
+        fi
+
+        echo "Verifying installation..."
+        dotnet --info
+      displayName: 'Ensure .NET SDK is Installed'
+
+# Stage 2: Restore Dependencies
 - stage: Restore
   displayName: 'Restore Dependencies'
+  dependsOn: Setup
   jobs:
   - job: RestoreJob
     pool:
@@ -16,15 +42,10 @@ stages:
       demands:
         - Agent.Name -equals localhost
     steps:
-    - task: UseDotNet@2
-      inputs:
-        packageType: 'sdk'
-        version: '8.0.x'  # Change based on your .NET version
-
     - script: dotnet restore YourProject.sln
       displayName: 'Dotnet Restore'
 
-# Stage 2: Build and Compile
+# Stage 3: Build and Compile
 - stage: Build
   displayName: 'Build and Compile'
   dependsOn: Restore
@@ -35,10 +56,5 @@ stages:
       demands:
         - Agent.Name -equals localhost
     steps:
-    - task: UseDotNet@2
-      inputs:
-        packageType: 'sdk'
-        version: '8.0.x'
-
     - script: dotnet build InfiniteGuide_Corner.sln --configuration Release
       displayName: 'Dotnet Build'
