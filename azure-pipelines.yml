@@ -66,7 +66,7 @@ stages:
       demands:
             - Agent.Name -equals localhost
       steps:
-          - script: dotnet publish src/Infyguide_corner/Infyguide_corner.csproj -c Release -o publish/
+          - script: dotnet publish src/Infyguide_corner/Infyguide_corner.csproj -c Release -o $(pwd)/publish
             displayName: 'Dotnet Publish'     
 # Stage 5: Upload artifacts to JFrog
 - stage: UploadToJFrog
@@ -84,6 +84,6 @@ stages:
       - script: |
           curl -fL https://getcli.jfrog.io | sh
           chmod +x jfrog
-          ./jfrog rt config --url $(ARTIFACTORY_URL) --user $(artifactoryUser) --password $(artifactorypwd) jfrog-config
+          ./jfrog config add --artifactory-url $(ARTIFACTORY_URL) --user $(artifactoryUser) --password $(artifactorypwd) jfrog-config
           ./jfrog rt upload "publish/*" infiguide-generic-local/my-app/$(Build.BuildId)
         displayName: 'Upload artifacts to JFrog'                   
