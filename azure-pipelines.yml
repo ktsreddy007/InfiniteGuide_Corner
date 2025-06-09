@@ -85,5 +85,4 @@ stages:
           curl -fL https://getcli.jfrog.io | sh
           chmod +x jfrog
           ./jfrog config add --artifactory-url $(ARTIFACTORY_URL) --user $(artifactoryUser) --password $(artifactorypwd) jfrog-config
-          ./jfrog rt upload "publish/*" infiguide-generic-local/my-app/$(Build.BuildId)
-        displayName: 'Upload artifacts to JFrog'                   
+          ./jfrog rt upload "publish/*" infiguide-generic-local/my-app/$(Build.BuildId)                 
