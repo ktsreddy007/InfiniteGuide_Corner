@@ -24,7 +24,6 @@ stages:
         else
           echo ".NET SDK already installed."
         fi
-
         echo "Verifying installation..."
         dotnet --info
       displayName: 'Ensure .NET SDK is Installed'
