@@ -2,10 +2,8 @@
 # Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
-
 trigger:
 - main
-
 stages:
 # Stage 1: Check and Install Dependencies (if needed)
 - stage: DotNetSetup
@@ -30,7 +28,6 @@ stages:
         echo "Verifying installation..."
         dotnet --info
       displayName: 'Ensure .NET SDK is Installed'
-
 # Stage 2: Restore Dependencies
 - stage: Restore
   displayName: 'Restore Dependencies'
@@ -44,7 +41,6 @@ stages:
     steps:
     - script: dotnet restore InfiniteGuide_Corner.sln
       displayName: 'Dotnet Restore'
-
 # Stage 3: Build and Compile
 - stage: Build
   displayName: 'Build and Compile'
@@ -67,11 +63,11 @@ stages:
   jobs:
   - job: PublishJob
     pool:
-        name: Self-Hosted
-        demands:
-          - Agent.Name -equals localhost
-        steps:
-          - script: dotnet publish InfiniteGuide_Corner.sln -c Release -o publish/
+      name: Self-Hosted
+      demands:
+            - Agent.Name -equals localhost
+      steps:
+          - script: dotnet publish src/Infyguide_corner/Infyguide_corner.csproj -c Release -o publish/
             displayName: 'Dotnet Publish'     
 # Stage 5: Upload artifacts to JFrog
 - stage: UploadToJFrog
@@ -85,11 +81,10 @@ stages:
         - Agent.Name -equals localhost
   variables:
       ARTIFACTORY_URL: 'http://192.168.56.1:8082'
-      ARTIFACTORY_USERNAME: $(artifactoryUser)
-      ARTIFACTORY_PASSWORD: $(artifactorypwd)
-      script: |
-        curl -fL https://getcli.jfrog.io | sh
-        chmod +x jfrog
-        ./jfrog rt config --url $(ARTIFACTORY_URL) --user $(ARTIFACTORY_USERNAME) --password $(ARTIFACTORY_PASSWORD) jfrog-config
-        ./jfrog rt upload "publish/*" infiguide-generic-local/my-app/$(Build.BuildId)
-      displayName: 'Upload artifacts to JFrog'                   
+      steps:
+        script: |
+          curl -fL https://getcli.jfrog.io | sh
+          chmod +x jfrog
+          ./jfrog rt config --url $(ARTIFACTORY_URL) --user $(artifactoryUser) --password $(artifactorypwd) jfrog-config
+          ./jfrog rt upload "publish/*" infiguide-generic-local/my-app/$(Build.BuildId)
+        displayName: 'Upload artifacts to JFrog'                   
