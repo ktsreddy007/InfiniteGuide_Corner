@@ -80,8 +80,8 @@ stages:
         - Agent.Name -equals localhost
     variables:
       ARTIFACTORY_URL: 'http://192.168.56.1:8082'
-      steps:
-        script: |
+    steps:
+      - script: |
           curl -fL https://getcli.jfrog.io | sh
           chmod +x jfrog
           ./jfrog rt config --url $(ARTIFACTORY_URL) --user $(artifactoryUser) --password $(artifactorypwd) jfrog-config
