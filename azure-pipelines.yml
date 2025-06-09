@@ -21,8 +21,8 @@ stages:
         echo "Checking for .NET SDK..."
         if ! command -v dotnet &> /dev/null; then
           echo ".NET SDK not found. Installing..."
-          sudo rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
-          sudo yum install -y dotnet-sdk-8.0
+          echo "$sudo_user" | sudo rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
+          echo "$sudo_user" | sudo yum install -y dotnet-sdk-8.0
         else
           echo ".NET SDK already installed."
         fi
