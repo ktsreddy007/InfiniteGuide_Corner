@@ -56,8 +56,10 @@ stages:
       demands:
         - Agent.Name -equals localhost
     steps:
-    - script: dotnet build InfiniteGuide_Corner.sln --configuration Release
-      displayName: 'Dotnet Build'
+    - script: |
+        dotnet clean InfiniteGuide_Corner.sln
+        dotnet build InfiniteGuide_Corner.sln --configuration Release
+      displayName: 'Dotnet Clean and Build'     
 # Stage 4: Publish
 - stage: Publish
   displayName: 'Publish Application'
@@ -69,5 +71,25 @@ stages:
         demands:
           - Agent.Name -equals localhost
         steps:
-        - script: dotnet publish InfiniteGuide_Corner.sln -c Release -o publish/
-        displayName: 'Dotnet Publish'     
+          - script: dotnet publish InfiniteGuide_Corner.sln -c Release -o publish/
+            displayName: 'Dotnet Publish'     
+# Stage 5: Upload artifacts to JFrog
+- stage: UploadToJFrog
+  displayName: 'Upload Artifacts to JFrog'
+  dependsOn: Publish
+  jobs:
+  - job: JFrogUploadJob
+    pool:
+      name: Self-Hosted
+      demands:
+        - Agent.Name -equals localhost
+  variables:
+      ARTIFACTORY_URL: 'http://192.168.56.1:8082'
+      ARTIFACTORY_USERNAME: $(artifactoryUser)
+      ARTIFACTORY_PASSWORD: $(artifactorypwd)
+      script: |
+        curl -fL https://getcli.jfrog.io | sh
+        chmod +x jfrog
+        ./jfrog rt config --url $(ARTIFACTORY_URL) --user $(ARTIFACTORY_USERNAME) --password $(ARTIFACTORY_PASSWORD) jfrog-config
+        ./jfrog rt upload "publish/*" infiguide-generic-local/my-app/$(Build.BuildId)
+      displayName: 'Upload artifacts to JFrog'                   
