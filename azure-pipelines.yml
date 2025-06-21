@@ -69,20 +69,20 @@ stages:
           - script: dotnet publish src/Infyguide_corner/Infyguide_corner.csproj -c Release -o $(pwd)/publish
             displayName: 'Dotnet Publish'     
 # Stage 5: Upload artifacts to JFrog
-- stage: UploadToJFrog
-  displayName: 'Upload Artifacts to JFrog'
-  dependsOn: Publish
-  jobs:
-  - job: JFrogUploadJob
-    pool:
-      name: Self-Hosted
-      demands:
-        - Agent.Name -equals localhost
-    variables:
-      ARTIFACTORY_URL: 'http://192.168.56.1:8082'
-    steps:
-      - script: |
-          curl -fL https://getcli.jfrog.io | sh
-          chmod +x jfrog
-          ./jfrog config add --artifactory-url $(ARTIFACTORY_URL) --user $(artifactoryUser) --password $(artifactorypwd) jfrog-config
-          ./jfrog rt upload "publish/*" infiguide-generic-local/my-app/$(Build.BuildId)                 
+#- stage: UploadToJFrog
+#  displayName: 'Upload Artifacts to JFrog'
+#  dependsOn: Publish
+#  jobs:
+#  - job: JFrogUploadJob
+#    pool:
+#      name: Self-Hosted
+#      demands:
+#        - Agent.Name -equals localhost
+#    variables:
+#      ARTIFACTORY_URL: 'http://192.168.56.1:8082'
+#    steps:
+#      - script: |
+#          curl -fL https://getcli.jfrog.io | sh
+#          chmod +x jfrog
+#          ./jfrog config add --artifactory-url $(ARTIFACTORY_URL) --user $(artifactoryUser) --password $(artifactorypwd) jfrog-config
+#          ./jfrog rt upload "publish/*" infiguide-generic-local/my-app/$(Build.BuildId)                 
