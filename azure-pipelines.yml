@@ -49,6 +49,18 @@ stages:
           demands:
             - Agent.Name -equals localhost
         steps:
+          # Step 1: Prepare SonarCloud Analysis Configuration (Now Before Build)
+          - task: SonarCloudPrepare@3
+            inputs:
+              SonarCloud: 'sonarsc'
+              scannerMode: 'dotnet'
+              projectKey: 'ktsreddy007_ktsreddy007'
+              projectName: 'ktsreddy007'
+              organization: 'ktsreddy007'
+              extraProperties: |
+                sonar.branch.name=$(Build.SourceBranchName:refs/heads/)
+          
+          # Step 2: Clean and Build
           - script: |
               dotnet clean InfiniteGuide_Corner.sln
               dotnet build InfiniteGuide_Corner.sln --configuration Release
@@ -64,25 +76,7 @@ stages:
           demands:
             - Agent.Name -equals localhost
         steps:
-          # Step 1: Prepare SonarCloud Analysis Configuration
-          - task: SonarCloudPrepare@3
-            inputs:
-              SonarCloud: 'sonarsc'
-              scannerMode: 'dotnet'
-              projectKey: 'ktsreddy007_ktsreddy007'
-              projectName: 'ktsreddy007'
-              organization: 'ktsreddy007'
-              extraProperties: |
-                sonar.branch.name=$(Build.SourceBranchName:refs/heads/)
-
-          # Debugging Step (Optional)
-          - script: |
-              echo "Verifying if SonarCloud preparation was successful..."
-              ls -la $(Build.SourcesDirectory)
-              echo "Current working directory: $(System.DefaultWorkingDirectory)"
-            displayName: 'Verify SonarCloud Analysis Preparation'
-
-          # Step 2: Publish the Quality Gate Result
+          # Step 1: Publish the Quality Gate Result
           - task: SonarCloudPublish@3
             inputs:
               pollingTimeoutSec: '300'
