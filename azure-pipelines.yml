@@ -78,6 +78,8 @@ stages:
               projectKey: 'ktsreddy007_ktsreddy007'
               projectName: 'ktsreddy007'
               organization: 'ktsreddy007'  # Your SonarQube Cloud organization
+              extraProperties: |
+                    sonar.branch.name=$(Build.SourceBranchName)
 
           # Step 2: Debugging Step - Check if the SonarCloud analysis preparation was successful
           - script: |
@@ -94,7 +96,7 @@ stages:
   # Stage 5: Publish
   - stage: Publish
     displayName: 'Publish Application'
-    dependsOn: SonarCloudAnalysis
+    dependsOn: Build
     jobs:
       - job: PublishJob
         pool:
