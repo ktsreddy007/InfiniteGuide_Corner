@@ -77,11 +77,6 @@ stages:
           projectName: 'ktsreddy007'
           organization: 'ktsreddy007'  # Your SonarQube Cloud organization
 
-      # Step 2: Run SonarQube Analysis (after build)
-      - task: SonarQubeAnalyze@5
-        inputs:
-          # No additional inputs needed for analysis task
-
       # Step 3: Publish the Quality Gate Result
       - task: SonarQubePublish@5
         inputs:
