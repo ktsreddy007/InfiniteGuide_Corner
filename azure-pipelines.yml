@@ -1,12 +1,7 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
-# Add steps that build, run tests, deploy, and more:
-# https://aka.ms/yaml
 trigger:
 - main
 
 stages:
-  # Stage 1: Check and Install Dependencies (if needed)
   - stage: DotNetSetup
     displayName: 'Check and Install Dependencies for .NET on CentOS'
     jobs:
@@ -31,7 +26,6 @@ stages:
               dotnet --info
             displayName: 'Ensure .NET SDK is Installed'
 
-  # Stage 2: Restore Dependencies
   - stage: Restore
     displayName: 'Restore Dependencies'
     dependsOn: DotNetSetup
@@ -45,7 +39,6 @@ stages:
           - script: dotnet restore InfiniteGuide_Corner.sln
             displayName: 'Dotnet Restore'
 
-  # Stage 3: Build and Compile
   - stage: Build
     displayName: 'Build and Compile'
     dependsOn: Restore
@@ -61,7 +54,6 @@ stages:
               dotnet build InfiniteGuide_Corner.sln --configuration Release
             displayName: 'Dotnet Clean and Build'
 
-  # Stage 4: SonarCloud Analysis (Updated to SonarCloud tasks)
   - stage: SonarCloudAnalysis
     displayName: 'SonarCloud Analysis'
     dependsOn: Build
@@ -75,30 +67,29 @@ stages:
           # Step 1: Prepare SonarCloud Analysis Configuration
           - task: SonarCloudPrepare@3
             inputs:
-              SonarCloud: 'sonarsc'  # Reference your SonarQube Cloud service connection here
+              SonarCloud: 'sonarsc'
               scannerMode: 'dotnet'
               projectKey: 'ktsreddy007_ktsreddy007'
               projectName: 'ktsreddy007'
-              organization: 'ktsreddy007'  # Your SonarQube Cloud organization
+              organization: 'ktsreddy007'
               extraProperties: |
-                    sonar.branch.name=$(Build.SourceBranchName:refs/heads/)
+                sonar.branch.name=$(Build.SourceBranchName:refs/heads/)
 
-          # Step 2: Debugging Step - Check if the SonarCloud analysis preparation was successful
+          # Debugging Step (Optional)
           - script: |
               echo "Verifying if SonarCloud preparation was successful..."
               ls -la $(Build.SourcesDirectory)
               echo "Current working directory: $(System.DefaultWorkingDirectory)"
             displayName: 'Verify SonarCloud Analysis Preparation'
 
-          # Step 3: Publish the Quality Gate Result
+          # Step 2: Publish the Quality Gate Result
           - task: SonarCloudPublish@3
             inputs:
-              pollingTimeoutSec: '300'  # Timeout to wait for analysis report
+              pollingTimeoutSec: '300'
 
-  # Stage 5: Publish
   - stage: Publish
     displayName: 'Publish Application'
-    dependsOn: Build
+    dependsOn: SonarCloudAnalysis
     jobs:
       - job: PublishJob
         pool:
