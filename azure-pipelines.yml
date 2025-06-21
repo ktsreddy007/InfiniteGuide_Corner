@@ -74,7 +74,7 @@ stages:
           - task: SonarCloudPrepare@3
             inputs:
               SonarCloud: 'sonarsc'  # Reference your SonarQube Cloud service connection here
-              scannerMode: 'MSBuild'
+              scannerMode: 'dotnet'
               projectKey: 'ktsreddy007_ktsreddy007'
               projectName: 'ktsreddy007'
               organization: 'ktsreddy007'  # Your SonarQube Cloud organization
