@@ -78,7 +78,15 @@ stages:
               projectKey: 'ktsreddy007_ktsreddy007'
               projectName: 'ktsreddy007'
               organization: 'ktsreddy007'  # Your SonarQube Cloud organization
-          # Step 2: Publish the Quality Gate Result
+
+          # Step 2: Debugging Step - Check if the SonarCloud analysis preparation was successful
+          - script: |
+              echo "Verifying if SonarCloud preparation was successful..."
+              ls -la $(Build.SourcesDirectory)
+              echo "Current working directory: $(System.DefaultWorkingDirectory)"
+            displayName: 'Verify SonarCloud Analysis Preparation'
+
+          # Step 3: Publish the Quality Gate Result
           - task: SonarCloudPublish@3
             inputs:
               pollingTimeoutSec: '300'  # Timeout to wait for analysis report
@@ -86,7 +94,7 @@ stages:
   # Stage 5: Publish
   - stage: Publish
     displayName: 'Publish Application'
-    dependsOn: Build
+    dependsOn: SonarCloudAnalysis
     jobs:
       - job: PublishJob
         pool:
