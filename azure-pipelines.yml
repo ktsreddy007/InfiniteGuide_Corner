@@ -61,12 +61,12 @@ stages:
         steps:
          - task: SonarCloudPrepare@3
            inputs:
-             SonarQube: ${{ parameters.sonarQubeConnection }}
-             organization: ${{ parameters.sonarOrganization }}
+             SonarQube: $(sonarQubeConnection)
+             organization: $(sonarOrganization)
              scannerMode: 'dotnet'
              dotnetScannerVersion: '10.1.2.114627'
-             projectKey: ${{ parameters.sonarProjectKey }}
-             projectName: ${{ parameters.sonarProjectName }}
+             projectKey: $(sonarProjectKey)
+             projectName: $(sonarProjectName)
          - script: |
              # Ensure we're in the correct directory where the solution is located
              cd $(Build.SourcesDirectory)
