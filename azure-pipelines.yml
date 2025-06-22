@@ -91,7 +91,7 @@ stages:
               dotnet publish InfiniteGuide_Corner.sln --configuration Release --output $(Build.ArtifactStagingDirectory)/publish
             displayName: 'Dotnet Publish'
 
-  - stage: UploadPublishFolder
+  - stage: Artifactoryupload
     displayName: 'Upload Entire Publish Folder to JFrog Artifactory'
     dependsOn: DotnetPublish
     jobs:
@@ -103,11 +103,13 @@ stages:
         steps:
           - checkout: self
             fetchDepth: 0
-          # Upload entire publish folder using JFrog CLI
-          - script: |
-              export JFROG_CLI_OFFER_CONFIG=false
-              echo "Configuring JFrog CLI..."
-              jfrog rt config --url https://trialgkzazx.jfrog.io/artifactory --service-connection jfrogservice --interactive=false
-              echo "Uploading the entire publish folder..."
-              jfrog rt u "$(Build.ArtifactStagingDirectory)/publish/*" "infiyguide/$(Build.BuildId)/" --recursive
+          # Configure JFrog CLI with service connection (no need to manually set credentials)
+          - task: JFrogArtifactory@1
+            inputs:
+              serverEndpoint: jfrogservice  # The name of your Artifactory service connection
+              command: 'upload'
+              sourcePath: '$(Build.ArtifactStagingDirectory)/publish/*'  # Path to the publish folder
+              targetPath: 'infiyguide/$(Build.BuildId)/'  # Target path in Artifactory
+              flat: true
+              recursive: true
             displayName: 'Upload Entire Publish Folder to Artifactory'
