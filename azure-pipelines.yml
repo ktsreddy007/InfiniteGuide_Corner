@@ -1,8 +1,25 @@
+parameters:
+  - name: dotnetSdkVersion
+    type: string
+    default: '8.0'
+  - name: sonarQubeConnection
+    type: string
+    default: 'sonarsc'
+  - name: sonarOrganization
+    type: string
+    default: 'ktsreddy007'
+  - name: sonarProjectKey
+    type: string
+    default: 'ktsreddy007_ktsreddy007'
+  - name: sonarProjectName
+    type: string
+    default: 'ktsreddy007'
+
 trigger:
 - main
 
 stages:
-  - stage: DotNetSetup
+  - stage: DotNet_DependencyCheck
     displayName: 'Check and Install Dependencies for .NET on CentOS'
     jobs:
       - job: DependencyCheck
@@ -18,9 +35,10 @@ stages:
               if ! command -v dotnet &> /dev/null; then
                 echo ".NET SDK not found. Installing..."
                 sudo rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
-                sudo yum install -y dotnet-sdk-8.0
+                sudo yum install -y dotnet-sdk-${{ parameters.dotnetSdkVersion }}
               else
-                echo ".NET SDK already installed."
+                installed_version=$(dotnet --version)
+                echo ".NET SDK is already installed (version: $installed_version)."
               fi
               echo "Verifying installation..."
               dotnet --info
@@ -28,9 +46,9 @@ stages:
 
   - stage: Sonarcloudanalysis
     displayName: 'Sonarcloud Analysis'
-    dependsOn: DotNetSetup
+    dependsOn: DotNet_DependencyCheck
     jobs:
-      - job: Sonarjob
+      - job: CodeAnalysis_&_Build
         pool:
           name: Self-Hosted
           demands:
@@ -38,21 +56,23 @@ stages:
         steps:
          - task: SonarCloudPrepare@3
            inputs:
-             SonarQube: 'sonarsc'
-             organization: 'ktsreddy007'
+             SonarQube: ${{ parameters.sonarQubeConnection }}
+             organization: ${{ parameters.sonarOrganization }}
              scannerMode: 'dotnet'
              dotnetScannerVersion: '10.1.2.114627'
-             projectKey: 'ktsreddy007_ktsreddy007'
-             projectName: 'ktsreddy007'
+             projectKey: ${{ parameters.sonarProjectKey }}
+             projectName: ${{ parameters.sonarProjectName }}
          - script: |
              # Ensure we're in the correct directory where the solution is located
              cd $(Build.SourcesDirectory)
              dotnet build InfiniteGuide_Corner.sln --configuration Release
            displayName: 'Dotnet Build (for SonarCloud analysis)'
          - task: SonarCloudAnalyze@3
+           displayName: 'Run SonarCloud Analysis'
          - task: SonarCloudPublish@3
            inputs:
              pollingTimeoutSec: '300'
+           displayName: 'Publish SonarCloud Analysis Results'
 
   - stage: Publish
     displayName: 'Publish Application'
@@ -65,6 +85,9 @@ stages:
             - Agent.Name -equals localhost
         steps:
           - script: |
+              echo "Cleaning previous builds (if any)..."
+              dotnet clean InfiniteGuide_Corner.sln --configuration Release
+              echo "Publishing the .NET application..."
               cd $(Build.SourcesDirectory)
               dotnet publish src/Infyguide_corner/Infyguide_corner.csproj -c Release -o $(pwd)/publish
             displayName: 'Dotnet Publish'
