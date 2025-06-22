@@ -4,21 +4,16 @@ parameters:
     default: '8.0'
   - name: sonarQubeConnection
     type: string
-    default: $(SonarQubeConnone)
+    default: 'sonarsc'
   - name: sonarOrganization
     type: string
     default: 'ktsreddy007'
   - name: sonarProjectKey
     type: string
-    default: $(SonarPrjKeyone)
+    default: 'ktsreddy007_ktsreddy007'
   - name: sonarProjectName
     type: string
     default: 'ktsreddy007'
-
-variables:
-  # Define secret variables to be used in the pipeline.
-  SonarQubeConnection: $(SonarQubeConnone)  # Secret variable reference
-  SonarProjectKey: $(SonarPrjKeyone)  # Secret variable reference
 
 trigger:
 - main
@@ -61,12 +56,13 @@ stages:
         steps:
          - task: SonarCloudPrepare@3
            inputs:
-             SonarQube: $(sonarQubeConnection)
-             organization: $(sonarOrganization)
+             SonarCloud: ${{ parameters.sonarQubeConnection }}
              scannerMode: 'dotnet'
              dotnetScannerVersion: '10.1.2.114627'
-             projectKey: $(sonarProjectKey)
-             projectName: $(sonarProjectName)
+             projectKey: ${{ parameters.sonarProjectKey }}
+             projectName: ${{ parameters.sonarProjectName }}
+             organization: ${{ parameters.sonarOrganization }}
+
          - script: |
              # Ensure we're in the correct directory where the solution is located
              cd $(Build.SourcesDirectory)
