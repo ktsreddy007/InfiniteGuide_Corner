@@ -16,7 +16,7 @@ stages:
              SonarQube: 'sonarsc'
              organization: 'ktsreddy007'
              scannerMode: 'dotnet'
-             dotnetScannerVersion: '10.2.0'
+             dotnetScannerVersion: '10.1.2.114627'
              projectKey: 'ktsreddy007_ktsreddy007'
              projectName: 'ktsreddy007'
          - task: SonarCloudAnalyze@3
