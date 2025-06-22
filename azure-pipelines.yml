@@ -64,7 +64,6 @@ stages:
              organization: ${{ parameters.sonarOrganization }}
 
          - script: |
-             # Ensure we're in the correct directory where the solution is located
              cd $(Build.SourcesDirectory)
              dotnet build InfiniteGuide_Corner.sln --configuration Release
            displayName: 'Dotnet Build (for SonarCloud analysis)'
@@ -74,6 +73,23 @@ stages:
            inputs:
              pollingTimeoutSec: '300'
            displayName: 'Publish SonarCloud Analysis Results'
+
+  - stage: Publish
+    displayName: 'Publish the .NET Application'
+    dependsOn: Sonarcloudanalysis
+    jobs:
+      - job: PublishJob
+        pool:
+          name: Self-Hosted
+          demands:
+            - Agent.Name -equals localhost
+        steps:
+          - script: |
+              echo "Cleaning previous builds (if any)..."
+              dotnet clean InfiniteGuide_Corner.sln --configuration Release
+              echo "Publishing the .NET application..."
+              dotnet publish InfiniteGuide_Corner.sln --configuration Release --output $(Build.ArtifactStagingDirectory)/publish
+            displayName: 'Dotnet Publish'
 
   - stage: UploadPublishFolder
     displayName: 'Upload Entire Publish Folder to JFrog Artifactory'
@@ -87,7 +103,6 @@ stages:
         steps:
           - checkout: self
             fetchDepth: 0
-          
           # Upload entire publish folder using JFrog CLI
           - script: |
               echo "Configuring JFrog CLI..."
