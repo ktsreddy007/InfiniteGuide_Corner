@@ -103,13 +103,12 @@ stages:
         steps:
           - checkout: self
             fetchDepth: 0
-          # Configure JFrog CLI with service connection (no need to manually set credentials)
-          - task: JFrogArtifactory@1
+          - task: JFrogPlatform@2
             inputs:
-              serverEndpoint: jfrogservice  # The name of your Artifactory service connection
-              command: 'upload'
-              sourcePath: '$(Build.ArtifactStagingDirectory)/publish/*'  # Path to the publish folder
-              targetPath: 'infiyguide/$(Build.BuildId)/'  # Target path in Artifactory
-              flat: true
-              recursive: true
+                  serviceEndpoint: 'jfrogservice'
+                  command: 'upload'
+                  sourcePath: '$(Build.ArtifactStagingDirectory)/publish/*'
+                  targetPath: 'infiyguide/$(Build.BuildId)/'
+                  flat: true
+                  recursive: true
             displayName: 'Upload Entire Publish Folder to Artifactory'
