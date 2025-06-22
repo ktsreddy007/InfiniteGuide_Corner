@@ -92,7 +92,7 @@ stages:
             displayName: 'Dotnet Publish'
 
   - stage: Artifactoryupload
-    displayName: 'Upload Entire Publish Folder to JFrog Artifactory'
+    displayName: 'Uploads Entire Publish Folder to JFrog Artifactory'
     dependsOn: DotnetPublish
     jobs:
       - job: UploadPublishFolderJob
