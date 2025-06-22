@@ -19,7 +19,7 @@ trigger:
 - main
 
 stages:
-  - stage: DotNet_DependencyCheck
+  - stage: DotNetSetup
     displayName: 'Check and Install Dependencies for .NET on CentOS'
     jobs:
       - job: DependencyCheck
@@ -46,9 +46,9 @@ stages:
 
   - stage: Sonarcloudanalysis
     displayName: 'Sonarcloud Analysis'
-    dependsOn: DotNet_DependencyCheck
+    dependsOn: DotNetSetup
     jobs:
-      - job: CodeAnalysis_&_Build
+      - job: CodeAnalysisAndBuild
         pool:
           name: Self-Hosted
           demands:
