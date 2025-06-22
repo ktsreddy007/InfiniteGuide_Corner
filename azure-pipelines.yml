@@ -5,11 +5,11 @@ stages:
   - stage: Sonarcloudanalysis
     displayName: 'Sonarcloudananlysis'
     jobs:
-      - job: Sonarjon
+      - job: Sonarjob
         pool:
           name: Self-Hosted
           demands:
-            -Agent.Name -equals localhost
+            - Agent.Name -equals localhost
         steps:
          - task: SonarCloudPrepare@3
            inputs:
