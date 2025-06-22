@@ -103,12 +103,8 @@ stages:
         steps:
           - checkout: self
             fetchDepth: 0
-          - task: JFrogPlatform@2
+          - task: JFrogCli@1
+            displayName: 'Run JFrog CLI Command'
             inputs:
-                  serviceEndpoint: 'jfrogservice'
-                  command: 'upload'
-                  sourcePath: '$(Build.ArtifactStagingDirectory)/publish/*'
-                  targetPath: 'infiyguide/$(Build.BuildId)/'
-                  flat: true
-                  recursive: true
-            displayName: 'Upload Entire Publish Folder to Artifactory'
+              command: 'rt ping'             
+            artifactoryService: 'MyJFrogServiceConnection'
