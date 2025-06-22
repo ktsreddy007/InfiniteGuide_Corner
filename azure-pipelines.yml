@@ -3,7 +3,7 @@ trigger:
 
 stages:
   - stage: Sonarcloudanalysis
-    displayName: 'Sonarcloudananlysis'
+    displayName: 'Sonarcloudanalysis'
     jobs:
       - job: Sonarjob
         pool:
@@ -19,10 +19,16 @@ stages:
              dotnetScannerVersion: '10.1.2.114627'
              projectKey: 'ktsreddy007_ktsreddy007'
              projectName: 'ktsreddy007'
+         - script: |
+             # Ensure we're in the correct directory where the solution is located
+             cd $(Build.SourcesDirectory)
+             dotnet build InfiniteGuide_Corner.sln --configuration Release
+           displayName: 'Dotnet Build'
          - task: SonarCloudAnalyze@3
          - task: SonarCloudPublish@3
            inputs:
-              pollingTimeoutSec: '300'        
+             pollingTimeoutSec: '300'
+
   - stage: DotNetSetup
     displayName: 'Check and Install Dependencies for .NET on CentOS'
     jobs:
@@ -32,8 +38,8 @@ stages:
           demands:
             - Agent.Name -equals localhost
         steps:
-          - checkout : self
-            fetchDepth: 0 
+          - checkout: self
+            fetchDepth: 0
           - script: |
               echo "Checking for .NET SDK..."
               if ! command -v dotnet &> /dev/null; then
@@ -57,7 +63,9 @@ stages:
           demands:
             - Agent.Name -equals localhost
         steps:
-          - script: dotnet restore InfiniteGuide_Corner.sln
+          - script: |
+              cd $(Build.SourcesDirectory)
+              dotnet restore InfiniteGuide_Corner.sln
             displayName: 'Dotnet Restore'
 
   - stage: Build
@@ -71,12 +79,13 @@ stages:
             - Agent.Name -equals localhost
         steps:
           - script: |
+              cd $(Build.SourcesDirectory)
               dotnet build InfiniteGuide_Corner.sln --configuration Release
-            displayName: 'Dotnet Clean and Build'
+            displayName: 'Dotnet Build'
 
   - stage: Publish
     displayName: 'Publish Application'
-    dependsOn: SonarCloudAnalysis
+    dependsOn: Sonarcloudanalysis
     jobs:
       - job: PublishJob
         pool:
@@ -84,5 +93,7 @@ stages:
           demands:
             - Agent.Name -equals localhost
         steps:
-          - script: dotnet publish src/Infyguide_corner/Infyguide_corner.csproj -c Release -o $(pwd)/publish
+          - script: |
+              cd $(Build.SourcesDirectory)
+              dotnet publish src/Infyguide_corner/Infyguide_corner.csproj -c Release -o $(pwd)/publish
             displayName: 'Dotnet Publish'
