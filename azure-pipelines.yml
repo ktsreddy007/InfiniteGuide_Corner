@@ -4,16 +4,21 @@ parameters:
     default: '8.0'
   - name: sonarQubeConnection
     type: string
-    default: 'sonarsc'
+    default: $(SonarQubeConnone)
   - name: sonarOrganization
     type: string
     default: 'ktsreddy007'
   - name: sonarProjectKey
     type: string
-    default: 'ktsreddy007_ktsreddy007'
+    default: $(SonarPrjKeyone)
   - name: sonarProjectName
     type: string
     default: 'ktsreddy007'
+
+variables:
+  # Define secret variables to be used in the pipeline.
+  SonarQubeConnection: $(SonarQubeConnone)  # Secret variable reference
+  SonarProjectKey: $(SonarPrjKeyone)  # Secret variable reference
 
 trigger:
 - main
