@@ -74,7 +74,7 @@ stages:
              pollingTimeoutSec: '300'
            displayName: 'Publish SonarCloud Analysis Results'
 
-  - stage: Publish
+  - stage: DotnetPublish
     displayName: 'Publish the .NET Application'
     dependsOn: Sonarcloudanalysis
     jobs:
@@ -93,7 +93,7 @@ stages:
 
   - stage: UploadPublishFolder
     displayName: 'Upload Entire Publish Folder to JFrog Artifactory'
-    dependsOn: Publish
+    dependsOn: DotnetPublish
     jobs:
       - job: UploadPublishFolderJob
         pool:
