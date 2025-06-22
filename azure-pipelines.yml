@@ -105,6 +105,7 @@ stages:
             fetchDepth: 0
           # Upload entire publish folder using JFrog CLI
           - script: |
+              export JFROG_CLI_OFFER_CONFIG=false
               echo "Configuring JFrog CLI..."
               jfrog rt config --url https://trialgkzazx.jfrog.io/artifactory --service-connection jfrogservice --interactive=false
               echo "Uploading the entire publish folder..."
