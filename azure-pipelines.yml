@@ -106,5 +106,5 @@ stages:
           - task: JFrogCli@1
             displayName: 'Run JFrog CLI Command'
             inputs:
-              command: 'ping'
+              command: 'jfrog rt ping'
               connection: 'jfrogservice'  
