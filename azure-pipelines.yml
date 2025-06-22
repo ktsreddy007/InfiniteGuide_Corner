@@ -75,20 +75,23 @@ stages:
              pollingTimeoutSec: '300'
            displayName: 'Publish SonarCloud Analysis Results'
 
-  - stage: Publish
-    displayName: 'Publish Application'
-    dependsOn: Sonarcloudanalysis
+  - stage: UploadPublishFolder
+    displayName: 'Upload Entire Publish Folder to JFrog Artifactory'
+    dependsOn: Publish
     jobs:
-      - job: PublishJob
+      - job: UploadPublishFolderJob
         pool:
           name: Self-Hosted
           demands:
             - Agent.Name -equals localhost
         steps:
+          - checkout: self
+            fetchDepth: 0
+          
+          # Upload entire publish folder using JFrog CLI
           - script: |
-              echo "Cleaning previous builds (if any)..."
-              dotnet clean InfiniteGuide_Corner.sln --configuration Release
-              echo "Publishing the .NET application..."
-              cd $(Build.SourcesDirectory)
-              dotnet publish src/Infyguide_corner/Infyguide_corner.csproj -c Release -o $(pwd)/publish
-            displayName: 'Dotnet Publish'
+              echo "Configuring JFrog CLI..."
+              jfrog rt config --url https://trialgkzazx.jfrog.io/artifactory --service-connection jfrogservice --interactive=false
+              echo "Uploading the entire publish folder..."
+              jfrog rt u "$(Build.ArtifactStagingDirectory)/publish/*" "infiyguide/$(Build.BuildId)/" --recursive
+            displayName: 'Upload Entire Publish Folder to Artifactory'
