@@ -2,8 +2,33 @@ trigger:
 - main
 
 stages:
+  - stage: DotNetSetup
+    displayName: 'Check and Install Dependencies for .NET on CentOS'
+    jobs:
+      - job: DependencyCheck
+        pool:
+          name: Self-Hosted
+          demands:
+            - Agent.Name -equals localhost
+        steps:
+          - checkout: self
+            fetchDepth: 0
+          - script: |
+              echo "Checking for .NET SDK..."
+              if ! command -v dotnet &> /dev/null; then
+                echo ".NET SDK not found. Installing..."
+                sudo rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
+                sudo yum install -y dotnet-sdk-8.0
+              else
+                echo ".NET SDK already installed."
+              fi
+              echo "Verifying installation..."
+              dotnet --info
+            displayName: 'Ensure .NET SDK is Installed'
+
   - stage: Sonarcloudanalysis
-    displayName: 'Sonarcloudanalysis'
+    displayName: 'Sonarcloud Analysis'
+    dependsOn: DotNetSetup
     jobs:
       - job: Sonarjob
         pool:
@@ -23,65 +48,11 @@ stages:
              # Ensure we're in the correct directory where the solution is located
              cd $(Build.SourcesDirectory)
              dotnet build InfiniteGuide_Corner.sln --configuration Release
-           displayName: 'Dotnet Build'
+           displayName: 'Dotnet Build (for SonarCloud analysis)'
          - task: SonarCloudAnalyze@3
          - task: SonarCloudPublish@3
            inputs:
              pollingTimeoutSec: '300'
-
-  - stage: DotNetSetup
-    displayName: 'Check and Install Dependencies for .NET on CentOS'
-    jobs:
-      - job: DependencyCheck
-        pool:
-          name: Self-Hosted
-          demands:
-            - Agent.Name -equals localhost
-        steps:
-          - checkout: self
-            fetchDepth: 0
-          - script: |
-              echo "Checking for .NET SDK..."
-              if ! command -v dotnet &> /dev/null; then
-                echo ".NET SDK not found. Installing..."
-                echo "$sudo_user" | sudo rpm -Uvh https://packages.microsoft.com/config/centos/7/packages-microsoft-prod.rpm
-                echo "$sudo_user" | sudo yum install -y dotnet-sdk-8.0
-              else
-                echo ".NET SDK already installed."
-              fi
-              echo "Verifying installation..."
-              dotnet --info
-            displayName: 'Ensure .NET SDK is Installed'
-
-  - stage: Restore
-    displayName: 'Restore Dependencies'
-    dependsOn: DotNetSetup
-    jobs:
-      - job: RestoreJob
-        pool:
-          name: Self-Hosted
-          demands:
-            - Agent.Name -equals localhost
-        steps:
-          - script: |
-              cd $(Build.SourcesDirectory)
-              dotnet restore InfiniteGuide_Corner.sln
-            displayName: 'Dotnet Restore'
-
-  - stage: Build
-    displayName: 'Build and Compile'
-    dependsOn: Restore
-    jobs:
-      - job: BuildJob
-        pool:
-          name: Self-Hosted
-          demands:
-            - Agent.Name -equals localhost
-        steps:
-          - script: |
-              cd $(Build.SourcesDirectory)
-              dotnet build InfiniteGuide_Corner.sln --configuration Release
-            displayName: 'Dotnet Build'
 
   - stage: Publish
     displayName: 'Publish Application'
