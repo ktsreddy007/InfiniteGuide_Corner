@@ -22,6 +22,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseStaticFiles();
 app.UseHttpsRedirection();
 app.UseCors("AllowAllOrigins");
 app.UseAuthorization();
@@ -48,7 +49,7 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast")
 .WithOpenApi();
-
+app.MapFallbackToFile("index.html");
 app.Run(); // ✅ Only one Run() here
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)

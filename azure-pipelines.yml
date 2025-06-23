@@ -14,6 +14,9 @@ parameters:
   - name: sonarProjectName
     type: string
     default: 'ktsreddy007'
+  - name: acrName
+    type: string
+    default: 'infiacr'  
 
 trigger:
 - main
@@ -74,37 +77,32 @@ stages:
              pollingTimeoutSec: '300'
            displayName: 'Publish SonarCloud Analysis Results'
 
-  - stage: DotnetPublish
-    displayName: 'Publish the .NET Application'
+  - stage: DockerPush
+    displayName: 'Push Docker Image to ACR'
     dependsOn: Sonarcloudanalysis
     jobs:
-      - job: PublishJob
+      - job: PushingToACR
         pool:
           name: Self-Hosted
           demands:
             - Agent.Name -equals localhost
         steps:
           - script: |
-              echo "Cleaning previous builds (if any)..."
-              dotnet clean InfiniteGuide_Corner.sln --configuration Release
-              echo "Publishing the .NET application..."
-              dotnet publish InfiniteGuide_Corner.sln --configuration Release --output $(Build.ArtifactStagingDirectory)/publish
-            displayName: 'Dotnet Publish'
-
-  - stage: Artifactoryupload
-    displayName: 'Uploads Entire Publish Folder to JFrog Artifactory'
-    dependsOn: DotnetPublish
-    jobs:
-      - job: UploadPublishFolderJob
-        pool:
-          name: Self-Hosted
-          demands:
-            - Agent.Name -equals localhost
-        steps:
-          - checkout: self
-            fetchDepth: 0
-          - task: JFrogCli@1
-            displayName: 'Run JFrog CLI Command'
+              echo "Building Docker image from Dockerfile..."
+              docker build -t myimage:latest .
+            displayName: 'Build Docker Image'
+          - task: AzureCLI@2
+            displayName: 'Login to ACR and Push Docker Image'
             inputs:
-              command: 'jfrog rt ping'
-              connection: 'jfrogservice'  
+              azureSubscription: 'acrsc'  # Replace with your actual service connection name
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                echo "Logging into Azure Container Registry..."
+                az acr login --name ${{parameters.acrName}}
+                LOCAL_IMAGE_NAME=myimage:latest
+                ACR_IMAGE_NAME=${{parameters.acrName}}.azurecr.io/myimage:latest
+                echo "Tagging the local image with ACR repo..."
+                docker tag $LOCAL_IMAGE_NAME $ACR_IMAGE_NAME
+                echo "Pushing image to ACR..."
+                docker push $ACR_IMAGE_NAME
