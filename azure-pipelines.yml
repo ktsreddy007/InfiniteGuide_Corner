@@ -16,10 +16,7 @@ parameters:
     default: 'ktsreddy007'
   - name: acrName
     type: string
-    default: 'infiacr'
-  - name: runDeployment
-    type: boolean
-    default: false    
+    default: 'infiacr'    
 
 trigger:
 - main
@@ -114,7 +111,6 @@ stages:
     dependsOn: DockerPush
     jobs:
       - job: DeployToAKS
-        condition: eq('${{ parameters.runDeployment }}', true)
         pool:
           name: Self-Hosted
           demands:
