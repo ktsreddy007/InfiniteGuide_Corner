@@ -44,7 +44,7 @@ stages:
           # Cache .nuget packages
           - task: Cache@2
             inputs:
-              key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,**/packages.config'
+              key: 'nuget | "$(Agent.OS)" | **/*.csproj, **/*.sln'
               path: ~/.nuget/packages
             displayName: 'Cache NuGet packages'
 
@@ -66,54 +66,29 @@ stages:
     displayName: 'Run Unit Tests'
     dependsOn: DotNetSetup
     jobs:
-      # Example splitting tests into 2 parallel jobs. Adjust as needed
-      - job: RunTests1
+      - job: RunTests
         pool:
           name: Self-Hosted
           demands:
-            - Agent.Name -equals localhost
+          - Agent.Name -equals localhost
         steps:
           - checkout: self
             fetchDepth: 0
           - task: Cache@2
             inputs:
-              key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,**/packages.config'
+              key: 'nuget | "$(Agent.OS)" | **/*.csproj, **/*.sln'
               path: ~/.nuget/packages
             displayName: 'Cache NuGet packages'
           - script: |
-              echo "Running unit tests - part 1..."
-              dotnet test InfiniteGuide_Corner.Tests1.csproj --configuration Release --no-build --logger "trx;LogFileName=test_results1.trx"
-            displayName: 'Run Unit Tests Part 1'
+              echo "Running unit tests..."
+              dotnet test Infyguide_corner.sln --configuration Release --no-build --logger "trx;LogFileName=test_results.trx"
+            displayName: 'Run Unit Tests'
           - task: PublishTestResults@2
             inputs:
               testResultsFormat: 'VSTest'
-              testResultsFiles: '**/test_results1.trx'
+              testResultsFiles: '**/test_results.trx'
               failTaskOnFailedTests: true
-            displayName: 'Publish Test Results Part 1'
-      - job: RunTests2
-        pool:
-          name: Self-Hosted
-          demands:
-            - Agent.Name -equals localhost
-        steps:
-          - checkout: self
-            fetchDepth: 0
-          - task: Cache@2
-            inputs:
-              key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,**/packages.config'
-              path: ~/.nuget/packages
-            displayName: 'Cache NuGet packages'
-          - script: |
-              echo "Running unit tests - part 2..."
-              dotnet test InfiniteGuide_Corner.Tests2.csproj --configuration Release --no-build --logger "trx;LogFileName=test_results2.trx"
-            displayName: 'Run Unit Tests Part 2'
-          - task: PublishTestResults@2
-            inputs:
-              testResultsFormat: 'VSTest'
-              testResultsFiles: '**/test_results2.trx'
-              failTaskOnFailedTests: true
-            displayName: 'Publish Test Results Part 2'
-
+            displayName: 'Publish Test Results'
   - stage: Sonarcloudanalysis
     displayName: 'Sonarcloud Analysis'
     dependsOn: UnitTesting
@@ -135,7 +110,7 @@ stages:
 
          - task: Cache@2
            inputs:
-             key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,**/packages.config'
+             key: 'nuget | "$(Agent.OS)" | **/*.csproj, **/*.sln'
              path: ~/.nuget/packages
            displayName: 'Cache NuGet packages'
 
