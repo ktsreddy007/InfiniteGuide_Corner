@@ -135,4 +135,4 @@ stages:
               kubernetesCluster: 'TejAKS'
               namespace: 'default'  # Specify the Kubernetes namespace
               command: 'apply'
-              arguments: '-f $(Build.SourcesDirectory)/deployment.yml'  # Specify the path to your deployment YAML file              
+              arguments: '-f /home/teja009/azagent/myagent/_work/1/s/deployment.yml'  # Specify the path to your deployment YAML file              
