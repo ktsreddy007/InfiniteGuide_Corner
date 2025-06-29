@@ -141,23 +141,14 @@ stages:
           demands:
             - Agent.Name -equals localhost
         steps:
-          - task: Cache@2
-            inputs:
-              key: 'docker | $(Agent.OS) | Dockerfile'
-              path: /tmp/.buildx-cache
-            displayName: 'Cache Docker Buildx cache'
-
           - script: |
-              echo "Building Docker image with cache..."
-              docker build --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache-new -t myimage:latest .
-              rm -rf /tmp/.buildx-cache
-              mv /tmp/.buildx-cache-new /tmp/.buildx-cache
-            displayName: 'Build Docker Image with Cache'
-
+              echo "Building Docker image from Dockerfile..."
+              docker build --cache-from ${{parameters.acrName}}.azurecr.io/myimage:latest -t myimage:latest .
+            displayName: 'Build Docker Image with cache'
           - task: AzureCLI@2
             displayName: 'Login to ACR and Push Docker Image'
             inputs:
-              azureSubscription: 'acrsc'
+              azureSubscription: 'acrsc'  # Replace with your actual service connection name
               scriptType: 'bash'
               scriptLocation: 'inlineScript'
               inlineScript: |
