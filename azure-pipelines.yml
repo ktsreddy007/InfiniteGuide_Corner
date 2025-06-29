@@ -41,6 +41,13 @@ stages:
         steps:
           - checkout: self
             fetchDepth: 0
+          # Cache .nuget packages
+          - task: Cache@2
+            inputs:
+              key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,**/packages.config'
+              path: ~/.nuget/packages
+            displayName: 'Cache NuGet packages'
+
           - script: |
               echo "Checking for .NET SDK..."
               if ! command -v dotnet &> /dev/null; then
@@ -55,9 +62,61 @@ stages:
               dotnet --info
             displayName: 'Ensure .NET SDK is Installed'
 
+  - stage: UnitTesting
+    displayName: 'Run Unit Tests'
+    dependsOn: DotNetSetup
+    jobs:
+      # Example splitting tests into 2 parallel jobs. Adjust as needed
+      - job: RunTests1
+        pool:
+          name: Self-Hosted
+          demands:
+            - Agent.Name -equals localhost
+        steps:
+          - checkout: self
+            fetchDepth: 0
+          - task: Cache@2
+            inputs:
+              key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,**/packages.config'
+              path: ~/.nuget/packages
+            displayName: 'Cache NuGet packages'
+          - script: |
+              echo "Running unit tests - part 1..."
+              dotnet test InfiniteGuide_Corner.Tests1.csproj --configuration Release --no-build --logger "trx;LogFileName=test_results1.trx"
+            displayName: 'Run Unit Tests Part 1'
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFormat: 'VSTest'
+              testResultsFiles: '**/test_results1.trx'
+              failTaskOnFailedTests: true
+            displayName: 'Publish Test Results Part 1'
+      - job: RunTests2
+        pool:
+          name: Self-Hosted
+          demands:
+            - Agent.Name -equals localhost
+        steps:
+          - checkout: self
+            fetchDepth: 0
+          - task: Cache@2
+            inputs:
+              key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,**/packages.config'
+              path: ~/.nuget/packages
+            displayName: 'Cache NuGet packages'
+          - script: |
+              echo "Running unit tests - part 2..."
+              dotnet test InfiniteGuide_Corner.Tests2.csproj --configuration Release --no-build --logger "trx;LogFileName=test_results2.trx"
+            displayName: 'Run Unit Tests Part 2'
+          - task: PublishTestResults@2
+            inputs:
+              testResultsFormat: 'VSTest'
+              testResultsFiles: '**/test_results2.trx'
+              failTaskOnFailedTests: true
+            displayName: 'Publish Test Results Part 2'
+
   - stage: Sonarcloudanalysis
     displayName: 'Sonarcloud Analysis'
-    dependsOn: DotNetSetup
+    dependsOn: UnitTesting
     jobs:
       - job: CodeAnalysisAndBuild
         pool:
@@ -74,16 +133,24 @@ stages:
              projectName: ${{ parameters.sonarProjectName }}
              organization: ${{ parameters.sonarOrganization }}
 
+         - task: Cache@2
+           inputs:
+             key: 'nuget | "$(Agent.OS)" | **/packages.lock.json,**/packages.config'
+             path: ~/.nuget/packages
+           displayName: 'Cache NuGet packages'
+
          - script: |
              cd $(Build.SourcesDirectory)
              dotnet publish InfiniteGuide_Corner.sln --configuration Release
            displayName: 'Dotnet Build (for SonarCloud analysis)'
+
          - task: SonarCloudAnalyze@3
            displayName: 'Run SonarCloud Analysis'
+
          - task: SonarCloudPublish@3
            inputs:
              pollingTimeoutSec: '300'
-           displayName: 'Publish SonarCloud Analysis Results'
+           displayName: 'Publish SonarCloud Analysis Results'        
 
   - stage: DockerPush
     displayName: 'Push Docker Image to ACR'
@@ -95,14 +162,23 @@ stages:
           demands:
             - Agent.Name -equals localhost
         steps:
+          - task: Cache@2
+            inputs:
+              key: 'docker | $(Agent.OS) | Dockerfile'
+              path: /tmp/.buildx-cache
+            displayName: 'Cache Docker Buildx cache'
+
           - script: |
-              echo "Building Docker image from Dockerfile..."
-              docker build --cache-from ${{parameters.acrName}}.azurecr.io/myimage:latest -t myimage:latest .
-            displayName: 'Build Docker Image with cache'
+              echo "Building Docker image with cache..."
+              docker build --cache-from=type=local,src=/tmp/.buildx-cache --cache-to=type=local,dest=/tmp/.buildx-cache-new -t myimage:latest .
+              rm -rf /tmp/.buildx-cache
+              mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+            displayName: 'Build Docker Image with Cache'
+
           - task: AzureCLI@2
             displayName: 'Login to ACR and Push Docker Image'
             inputs:
-              azureSubscription: 'acrsc'  # Replace with your actual service connection name
+              azureSubscription: 'acrsc'
               scriptType: 'bash'
               scriptLocation: 'inlineScript'
               inlineScript: |
@@ -144,4 +220,4 @@ stages:
                   az aks get-credentials --resource-group $(RESOURCE_GROUP) --name $(AKS_CLUSTER_NAME)
                   echo "Applying Kubernetes deployment manifest..."
                   sed -i "s|REPLACE_IMAGE|$(ACR_LOGIN_SERVER)/$(IMAGE_NAME):$(IMAGE_TAG)|g" $(Build.SourcesDirectory)/deployment.yml
-                  kubectl apply -f $(Build.SourcesDirectory)/deployment.yml      
+                  kubectl apply -f $(Build.SourcesDirectory)/deployment.yml               
