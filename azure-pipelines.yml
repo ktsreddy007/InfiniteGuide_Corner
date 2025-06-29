@@ -68,7 +68,7 @@ stages:
 
          - script: |
              cd $(Build.SourcesDirectory)
-             dotnet build InfiniteGuide_Corner.sln --configuration Release
+             dotnet publish InfiniteGuide_Corner.sln --configuration Release
            displayName: 'Dotnet Build (for SonarCloud analysis)'
          - task: SonarCloudAnalyze@3
            displayName: 'Run SonarCloud Analysis'
@@ -89,8 +89,8 @@ stages:
         steps:
           - script: |
               echo "Building Docker image from Dockerfile..."
-              docker build -t myimage:latest .
-            displayName: 'Build Docker Image'
+              docker build --cache-from ${{parameters.acrName}}.azurecr.io/myimage:latest -t myimage:latest .
+            displayName: 'Build Docker Image with cache'
           - task: AzureCLI@2
             displayName: 'Login to ACR and Push Docker Image'
             inputs:
@@ -106,3 +106,33 @@ stages:
                 docker tag $LOCAL_IMAGE_NAME $ACR_IMAGE_NAME
                 echo "Pushing image to ACR..."
                 docker push $ACR_IMAGE_NAME
+  - stage: AKSDeployment
+    displayName: 'Deploy to AKS'
+    dependsOn: DockerPush
+    jobs:
+      - job: DeployToAKS
+        pool:
+          name: Self-Hosted
+          demands:
+            - Agent.Name -equals localhost
+        steps:
+          - task: AzureCLI@2
+            displayName: 'Configure kubectl for AKS'
+            inputs:
+              azureSubscription: 'AKSsc'  # Use the service connection name
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                echo "Setting up kubectl context for AKS..."
+                az aks get-credentials --resource-group AKSrg --name TejAKS
+                
+          - task: kubernetes@1
+            displayName: 'Deploy Docker Image to AKS'
+            inputs:
+              connectionType: 'Azure Resource Manager'
+              azureSubscription: 'AKSsc'  # Use the service connection name
+              azureResourceGroup: 'AKSrg'
+              kubernetesCluster: 'TejAKS'
+              namespace: 'default'  # Specify the Kubernetes namespace
+              command: 'apply'
+              arguments: '-f k8s/deployment.yaml'  # Specify the path to your deployment YAML file              
