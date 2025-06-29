@@ -85,7 +85,7 @@ stages:
             displayName: 'Cache NuGet packages'
           - script: |
               echo "Running unit tests..."
-              dotnet test Infyguide_corner.sln --configuration Release --no-build --logger "trx;LogFileName=test_results.trx"
+              dotnet test Infyguide_corner.csproj --configuration Release --no-build --logger "trx;LogFileName=test_results.trx"
             displayName: 'Run Unit Tests'
           - task: PublishTestResults@2
             inputs:
@@ -120,7 +120,7 @@ stages:
 
          - script: |
              cd $(Build.SourcesDirectory)
-             dotnet publish InfiniteGuide_Corner.sln --configuration Release
+             dotnet publish Infyguide_corner.csproj --configuration Release
            displayName: 'Dotnet Build (for SonarCloud analysis)'
 
          - task: SonarCloudAnalyze@3
