@@ -90,52 +90,15 @@ stages:
           - script: |
               echo "Building Docker image from Dockerfile..."
               docker build --cache-from ${{parameters.acrName}}.azurecr.io/myimage:latest -t myimage:latest .
-            displayName: 'Build Docker Image with cache'
-          - task: AzureCLI@2
-            displayName: 'Login to ACR and Push Docker Image'
-            inputs:
-              azureSubscription: 'acrsc'  # Replace with your actual service connection name
-              scriptType: 'bash'
-              scriptLocation: 'inlineScript'
-              inlineScript: |
-                echo "Logging into Azure Container Registry..."
-                az acr login --name ${{parameters.acrName}}
-                LOCAL_IMAGE_NAME=myimage:latest
-                ACR_IMAGE_NAME=${{parameters.acrName}}.azurecr.io/myimage:latest
-                echo "Tagging the local image with ACR repo..."
-                docker tag $LOCAL_IMAGE_NAME $ACR_IMAGE_NAME
-                echo "Pushing image to ACR..."
-                docker push $ACR_IMAGE_NAME
-  - stage: AKSDeployment
-    displayName: 'Deploy to AKS'
-    dependsOn: DockerPush
-    jobs:
-      - job: DeployToAKS
-        pool:
-          name: Self-Hosted
-          demands:
-            - Agent.Name -equals localhost
-        steps:
-          - task: AzureCLI@2
-            displayName: 'Configure kubectl for AKS'
-            inputs:
-              azureSubscription: 'AKSsc'  # Use the service connection name
-              scriptType: 'bash'
-              scriptLocation: 'inlineScript'
-              inlineScript: |
-                echo "Setting up kubectl context for AKS..."
-                az aks get-credentials --resource-group AKSrg --name TejAKS                
-          - script: |
               echo "Listing files in $(Build.SourcesDirectory):"
               ls -la $(Build.SourcesDirectory)
-            displayName: 'Debug: list deployment files' 
-          - task: kubernetes@1
+            displayName: 'Build Docker Image with cache & list deployment files'
+        
+          - task: KubernetesManifest@1
             displayName: 'Deploy Docker Image to AKS'
             inputs:
-              connectionType: 'Azure Resource Manager'
-              azureSubscriptionEndpoint: 'AKSsc'  # Use the service connection name
-              azureResourceGroup: 'AKSrg'
-              kubernetesCluster: 'TejAKS'
-              namespace: 'default'  # Specify the Kubernetes namespace
-              command: 'apply'
-              arguments: '-f $(Build.SourcesDirectory)/deployment.yml'  # Specify the path to your deployment YAML file              
+              action: 'deploy'
+              kubernetesServiceConnection: 'AKSsc'
+              namespace: 'default'
+              manifests: |
+                  $(Build.SourcesDirectory)/deployment.yml     
