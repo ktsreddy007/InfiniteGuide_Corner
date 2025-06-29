@@ -130,7 +130,7 @@ stages:
             displayName: 'Deploy Docker Image to AKS'
             inputs:
               connectionType: 'Azure Resource Manager'
-              azureSubscription: 'AKSsc'  # Use the service connection name
+              azureSubscriptionEndpoint: 'AKSsc'  # Use the service connection name
               azureResourceGroup: 'AKSrg'
               kubernetesCluster: 'TejAKS'
               namespace: 'default'  # Specify the Kubernetes namespace
