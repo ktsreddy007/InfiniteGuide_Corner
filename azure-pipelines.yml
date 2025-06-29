@@ -135,4 +135,4 @@ stages:
               kubernetesCluster: 'TejAKS'
               namespace: 'default'  # Specify the Kubernetes namespace
               command: 'apply'
-              arguments: '-f k8s/deployment.yaml'  # Specify the path to your deployment YAML file              
+              arguments: '-f deployment.yaml'  # Specify the path to your deployment YAML file              
