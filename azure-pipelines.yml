@@ -16,7 +16,10 @@ parameters:
     default: 'ktsreddy007'
   - name: acrName
     type: string
-    default: 'infiacr'  
+    default: 'infiacr'
+  - name: runDeployment
+    type: boolean
+    default: false    
 
 trigger:
 - main
@@ -111,6 +114,7 @@ stages:
     dependsOn: DockerPush
     jobs:
       - job: DeployToAKS
+        condition: eq('${{ parameters.runDeployment }}', true)
         pool:
           name: Self-Hosted
           demands:
@@ -124,8 +128,11 @@ stages:
               scriptLocation: 'inlineScript'
               inlineScript: |
                 echo "Setting up kubectl context for AKS..."
-                az aks get-credentials --resource-group AKSrg --name TejAKS
-                
+                az aks get-credentials --resource-group AKSrg --name TejAKS                
+          - script: |
+              echo "Listing files in $(Build.SourcesDirectory):"
+              ls -la $(Build.SourcesDirectory)
+            displayName: 'Debug: list deployment files' 
           - task: kubernetes@1
             displayName: 'Deploy Docker Image to AKS'
             inputs:
@@ -135,4 +142,4 @@ stages:
               kubernetesCluster: 'TejAKS'
               namespace: 'default'  # Specify the Kubernetes namespace
               command: 'apply'
-              arguments: '-f /home/teja009/azagent/myagent/_work/1/s/deployment.yml'  # Specify the path to your deployment YAML file              
+              arguments: '-f $(Build.SourcesDirectory)/deployment.yml'  # Specify the path to your deployment YAML file              
