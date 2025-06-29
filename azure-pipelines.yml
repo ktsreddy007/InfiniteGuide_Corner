@@ -23,7 +23,7 @@ trigger:
 
 stages:
   - stage: DotNetSetup
-    displayName: 'Check and Install Dependencies for .NET on CentOS'
+    displayName: 'Checks and Installs Dependencies for .NET on CentOS'
     jobs:
       - job: DependencyCheck
         pool:
