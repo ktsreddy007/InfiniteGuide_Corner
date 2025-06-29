@@ -78,11 +78,6 @@ stages:
             fetchDepth: 0
           - script: mkdir -p $HOME/.nuget/packages
             displayName: 'Create NuGet packages folder if missing'
-          - task: Cache@2
-            inputs:
-              key: 'nuget | "$(Agent.OS)" | **/*.csproj, **/*.sln'
-              path: $(HOME)/.nuget/packages
-            displayName: 'Cache NuGet packages'
           - script: |
               echo "Running unit tests..."
               dotnet test $(Build.SourcesDirectory)/src/Infyguide_corner/Infyguide_corner.csproj --configuration Release --no-build --logger "trx;LogFileName=test_results.trx"
