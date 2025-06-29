@@ -16,7 +16,15 @@ parameters:
     default: 'ktsreddy007'
   - name: acrName
     type: string
-    default: 'infiacr'    
+    default: 'infiacr'   
+
+variables:
+  ACR_NAME: 'infiacr'  # Replace with your ACR resource name (not login server)
+  ACR_LOGIN_SERVER: 'infiacr.azurecr.io'  # Replace with your ACR login server
+  RESOURCE_GROUP: 'AKSrg'
+  AKS_CLUSTER_NAME: 'TejAKS'
+  IMAGE_NAME: 'myapp'
+  IMAGE_TAG: 'latest'    
 
 trigger:
 - main
@@ -90,15 +98,50 @@ stages:
           - script: |
               echo "Building Docker image from Dockerfile..."
               docker build --cache-from ${{parameters.acrName}}.azurecr.io/myimage:latest -t myimage:latest .
-              echo "Listing files in $(Build.SourcesDirectory):"
-              ls -la $(Build.SourcesDirectory)
-            displayName: 'Build Docker Image with cache & list deployment files'
-        
-          - task: KubernetesManifest@1
-            displayName: 'Deploy Docker Image to AKS'
+            displayName: 'Build Docker Image with cache'
+          - task: AzureCLI@2
+            displayName: 'Login to ACR and Push Docker Image'
             inputs:
-              action: 'deploy'
-              kubernetesServiceConnection: 'AKSsc'
-              namespace: 'default'
-              manifests: |
-                  $(Build.SourcesDirectory)/deployment.yml     
+              azureSubscription: 'acrsc'  # Replace with your actual service connection name
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                echo "Logging into Azure Container Registry..."
+                az acr login --name ${{parameters.acrName}}
+                LOCAL_IMAGE_NAME=myimage:latest
+                ACR_IMAGE_NAME=${{parameters.acrName}}.azurecr.io/myimage:latest
+                echo "Tagging the local image with ACR repo..."
+                docker tag $LOCAL_IMAGE_NAME $ACR_IMAGE_NAME
+                echo "Pushing image to ACR..."
+                docker push $ACR_IMAGE_NAME
+  - stage: AKSDeployment
+    displayName: 'Deploy to AKS'
+    dependsOn: DockerPush
+    jobs:
+      - job: DeployToAKS
+        pool:
+          name: Self-Hosted
+          demands:
+            - Agent.Name -equals localhost
+        steps:
+          - task: AzureCLI@2
+            displayName: 'Login to Azure Container Registry'
+            inputs:
+              azureSubscription: 'AKSsc'
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                  echo "Logging into ACR..."
+                  az acr login --name $(ACR_NAME)
+          - task: AzureCLI@2
+            displayName: 'Configure kubectl and deploy to AKS'
+            inputs:
+              azureSubscription: 'AKSsc'
+              scriptType: 'bash'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                  echo "Setting up kubectl context for AKS..."
+                  az aks get-credentials --resource-group $(RESOURCE_GROUP) --name $(AKS_CLUSTER_NAME)
+                  echo "Applying Kubernetes deployment manifest..."
+                  sed -i "s|REPLACE_IMAGE|$(ACR_LOGIN_SERVER)/$(IMAGE_NAME):$(IMAGE_TAG)|g" $(Build.SourcesDirectory)/deployment.yml
+                  kubectl apply -f $(Build.SourcesDirectory)/deployment.yml      
