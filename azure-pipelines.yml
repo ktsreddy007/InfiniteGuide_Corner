@@ -27,7 +27,6 @@ variables:
   IMAGE_TAG: 'latest'    
 
 trigger:
-- main
 
 stages:
   - stage: DotNetSetup
@@ -106,12 +105,6 @@ stages:
              projectKey: ${{ parameters.sonarProjectKey }}
              projectName: ${{ parameters.sonarProjectName }}
              organization: ${{ parameters.sonarOrganization }}
-
-         - task: Cache@2
-           inputs:
-             key: 'nuget | "$(Agent.OS)" | **/*.csproj, **/*.sln'
-             path: $(HOME)/.nuget/packages
-           displayName: 'Cache NuGet packages'
 
          - script: |
              cd $(Build.SourcesDirectory)
