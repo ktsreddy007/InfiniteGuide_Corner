@@ -41,13 +41,13 @@ stages:
         steps:
           - checkout: self
             fetchDepth: 0
-          - script: mkdir -p ~/.nuget/packages
+          - script: mkdir -p $HOME/.nuget/packages
             displayName: 'Create NuGet packages folder if missing'
           # Cache .nuget packages
           - task: Cache@2
             inputs:
               key: 'nuget | "$(Agent.OS)" | **/*.csproj, **/*.sln'
-              path: ~/.nuget/packages
+              path: $(HOME)/.nuget/packages
             displayName: 'Cache NuGet packages'
 
           - script: |
@@ -76,12 +76,12 @@ stages:
         steps:
           - checkout: self
             fetchDepth: 0
-          - script: mkdir -p ~/.nuget/packages
+          - script: mkdir -p $HOME/.nuget/packages
             displayName: 'Create NuGet packages folder if missing'
           - task: Cache@2
             inputs:
               key: 'nuget | "$(Agent.OS)" | **/*.csproj, **/*.sln'
-              path: ~/.nuget/packages
+              path: $(HOME)/.nuget/packages
             displayName: 'Cache NuGet packages'
           - script: |
               echo "Running unit tests..."
@@ -115,7 +115,7 @@ stages:
          - task: Cache@2
            inputs:
              key: 'nuget | "$(Agent.OS)" | **/*.csproj, **/*.sln'
-             path: ~/.nuget/packages
+             path: $(HOME)/.nuget/packages
            displayName: 'Cache NuGet packages'
 
          - script: |
